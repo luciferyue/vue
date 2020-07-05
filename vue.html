@@ -10,6 +10,8 @@
     <p>{{counter}}</p>
     <p y-text="counter"></p>
     <p y-html="desc"></p>
+    <buttoon @click="onclick">暗号呼叫</buttoon>
+    <p>{{cipher}}</p>
 </div>
 
 <body>
@@ -21,10 +23,17 @@
         el: "#app",
         data: {
             counter: 1,
-            desc: '这是html<span style="color:red">冬瓜冬瓜我是西瓜</span>'
+            desc: '暗号<span style="color:red">冬瓜冬瓜我是西瓜</span>',
+            cipher: "冬瓜冬瓜我是西瓜"
+        },
+        methods: {
+            onclick(el) {
+                console.log(this, el)
+                this.cipher = "冬瓜收到到"
+            }
         }
     });
-
+    // app.onclick()
     setInterval(() => {
         app.counter++
     }, 1000);

@@ -21,10 +21,10 @@ function defineReactive(obj, key, val) {
                 val = newVal
 
                 //通知更新粗暴的方式，全员更新
-                watchers.forEach(w => w.update())
+                // watchers.forEach(w => w.update())
 
                 //精确的是知道那个管家去更新
-                // dep.notify();
+                dep.notify();
             }
         }
     })
@@ -50,6 +50,17 @@ function proxy(vm) {
             }
         })
     })
+    Object.keys(vm.$methods).forEach(key => {
+        Object.defineProperty(vm, key, {
+            get() {
+                return vm.$methods[key];
+            },
+            set(v) {
+                // vm.$data[key] = v;
+                console.log('禁止重置')
+            }
+        })
+    })
 }
 
 //创建自己的vue框架
@@ -60,6 +71,7 @@ class Yvue {
 
         //保存需要响应的数据
         this.$data = options.data;
+        this.$methods = options.methods;
 
         //调用observe，对data对象响应处理
         observe(this.$data)
@@ -161,10 +173,21 @@ class Complie {
                 const dir = attrName.substring(2) //截取指令name
                 //执行指令
                 this[dir] && this[dir](node, exp);
+            } else if (attrName.startsWith("@")) {
+                const dir = attrName.substring(1) //截取事件name
+                //绑定事件
+                this[dir] && this[dir](node, exp);
             }
         })
     }
 
+    //点击事件
+    click = (node, exp) => {
+        //监听node事件，并绑定vm实例
+        node.addEventListener("click", () => {
+            this.$vm.$options.methods[exp].call(this.$vm, node)
+        })
+    }
 
     //文本的指令
     text = (node, exp) => {
