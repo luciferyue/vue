@@ -12,6 +12,9 @@
     <p y-html="desc"></p>
     <buttoon @click="onclick">暗号呼叫</buttoon>
     <p>{{cipher}}</p>
+    <div><input y-model="message" type="text"></div>
+    <p>测试：{{message}}</p>
+    <buttoon @click="setInput">设置input值</buttoon>
 </div>
 
 <body>
@@ -24,12 +27,17 @@
         data: {
             counter: 1,
             desc: '暗号<span style="color:red">冬瓜冬瓜我是西瓜</span>',
-            cipher: "冬瓜冬瓜我是西瓜"
+            cipher: "冬瓜冬瓜我是西瓜",
+            message: "双向数据绑定"
         },
         methods: {
             onclick(el) {
                 console.log(this, el)
                 this.cipher = "冬瓜收到到"
+            },
+            setInput() {
+                console.log(this.message);
+                this.message = "冬瓜冬瓜我是西瓜"
             }
         }
     });

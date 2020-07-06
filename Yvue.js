@@ -189,6 +189,16 @@ class Complie {
         })
     }
 
+    //model双向数据绑定
+    model = (node, exp) => {
+        this.update(node, exp, 'model');
+
+        //监听input
+        node.addEventListener("input", (e) => {
+            this.$vm.$data[exp] = e.target.value;
+        })
+    }
+
     //文本的指令
     text = (node, exp) => {
         // node.textContent = this.$vm[exp];    //通过更新函数同意调用
@@ -199,6 +209,10 @@ class Complie {
     html = (node, exp) => {
         // node.innerHTML = this.$vm[exp];    //通过更新函数同意调用
         this.update(node, exp, 'html');
+    }
+
+    modelUpdater = (node, value) => {
+        node.value = value;
     }
 
     htmlUpdater = (node, value) => {
