@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vue源码剖析</title>
+	<script src="../../dist/vue.js"></script>
+</head>
+
+<body>
+	<div id="app">
+		<h1>初始化流程</h1>
+		<h1 id="p">{{foo}}</h1>
+	</div>
+</body>
+<script>
+	//创建实例 会有几个Observe? Dep? Watcher
+	//$attrs,$listener会乱入dep
+	//2 2 1
+	//2 4 1
+	new Vue({
+		el: "#app",
+		data: {
+			foo: "ready~"
+		},
+		mounted() {
+			//相当于在[callbacks]前面的
+			Promise.resolve().then(() => {
+				console.log('promise1的log', p.innerHTML);
+			})
+			this.foo = Math.random();
+			console.log("01", this.foo)
+			this.foo = Math.random();
+			console.log("02", this.foo)
+			this.foo = Math.random();
+			console.log("03", this.foo)
+
+			console.log('正常colosle', p.innerHTML);
+
+			// 相当于在[callbacks]后面加的
+			Promise.resolve().then(() => {
+				console.log('promise2的log', p.innerHTML);
+			})
+
+			//相当如插入[callbacks]里面的
+			this.$nextTick(() => {
+				console.log("nextTick", p.innerHTML)
+			})
+		}
+	});
+</script>
+
+</html>

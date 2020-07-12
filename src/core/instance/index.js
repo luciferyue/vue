@@ -7,14 +7,14 @@ import { warn } from '../util/index'
 
 //真正的构造函数
 function Vue(options) {
-    if (process.env.NODE_ENV !== 'production' &&
-        !(this instanceof Vue)
-    ) {
-        warn('Vue is a constructor and should be called with the `new` keyword')
-    }
+	if (process.env.NODE_ENV !== 'production' &&
+		!(this instanceof Vue)
+	) {
+		warn('Vue is a constructor and should be called with the `new` keyword')
+	}
 
-    //初始化
-    this._init(options)
+	//初始化
+	this._init(options)
 }
 
 //实例方法的初始化
