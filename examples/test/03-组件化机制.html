@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vue源码剖析</title>
+	<script src="../../dist/vue.js"></script>
+</head>
+
+<body>
+	<div id="demo">
+		<h1>vue模板<span>编译</span></h1>
+		<comp></comp>
+	</div>
+</body>
+<script>
+	Vue.component('comp', {
+		template: '<div>i am comp</div>'
+	})
+
+	// 创建自上而下，挂载自下而上
+	// 创建实例
+	// vue的根实例
+	// app根组件
+	// comp组件
+	const app = new Vue({
+		el: "#demo"
+	});
+	// 生命周期，带子组件
+	// 		parent create
+	// 		parent beforeMount
+	//  			child create
+	//				child beforeMount
+	// 				child mounted
+	// 		parent mounted
+	console.log(app.$options.render);
+</script>
+
+</html>

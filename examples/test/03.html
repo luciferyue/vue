@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vue源码剖析</title>
+	<script src="../../dist/vue.js"></script>
+</head>
+
+<body>
+	<div id="demo">
+		<h1>vue模板<span>编译</span></h1>
+		<p v-if="foo">{{foo}}</p>
+		<p v-for="s in arr" :key="s">{{s}}</p>
+		<comp></comp>
+	</div>
+</body>
+<script>
+	Vue.component('comp', {
+		template: '<div>i am comp</div>'
+	})
+	const app = new Vue({
+		el: "#demo",
+		data: { foo: "foo~", arr: [1, 2] }
+	});
+	console.log(app.$options.render);
+</script>
+
+</html>
