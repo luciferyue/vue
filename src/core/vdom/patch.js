@@ -34,14 +34,18 @@ const hooks = ["create", "activate", "update", "remove", "destroy"];
 
 function sameVnode(a, b) {
 	return (
-		a.key === b.key &&
-		((a.tag === b.tag &&
-			a.isComment === b.isComment &&
-			isDef(a.data) === isDef(b.data) &&
-			sameInputType(a, b)) ||
-			(isTrue(a.isAsyncPlaceholder) &&
+		a.key === b.key && (
+			(
+				a.tag === b.tag &&
+				a.isComment === b.isComment &&
+				isDef(a.data) === isDef(b.data) &&
+				sameInputType(a, b)
+			) || (
+				isTrue(a.isAsyncPlaceholder) &&
 				a.asyncFactory === b.asyncFactory &&
-				isUndef(b.asyncFactory.error)))
+				isUndef(b.asyncFactory.error)
+			)
+		)
 	);
 }
 
@@ -79,13 +83,7 @@ export function createPatchFunction(backend) {
 	}
 
 	function emptyNodeAt(elm) {
-		return new VNode(
-			nodeOps.tagName(elm).toLowerCase(),
-			{},
-			[],
-			undefined,
-			elm
-		);
+		return new VNode(nodeOps.tagName(elm).toLowerCase(), {}, [], undefined, elm);
 	}
 
 	function createRmCb(childElm, listeners) {
@@ -159,9 +157,7 @@ export function createPatchFunction(backend) {
 				}
 				if (isUnknownElement(vnode, creatingElmInVPre)) {
 					warn(
-						"Unknown custom element: <" +
-						tag +
-						"> - did you " +
+						"Unknown custom element: <" + tag + "> - did you " +
 						"register the component correctly? For recursive components, " +
 						'make sure to provide the "name" option.',
 						vnode.context
@@ -366,24 +362,9 @@ export function createPatchFunction(backend) {
 		}
 	}
 
-	function addVnodes(
-		parentElm,
-		refElm,
-		vnodes,
-		startIdx,
-		endIdx,
-		insertedVnodeQueue
-	) {
+	function addVnodes(parentElm, refElm, vnodes, startIdx, endIdx, insertedVnodeQueue) {
 		for (; startIdx <= endIdx; ++startIdx) {
-			createElm(
-				vnodes[startIdx],
-				insertedVnodeQueue,
-				parentElm,
-				refElm,
-				false,
-				vnodes,
-				startIdx
-			);
+			createElm(vnodes[startIdx], insertedVnodeQueue, parentElm, refElm, false, vnodes, startIdx);
 		}
 	}
 
@@ -449,13 +430,9 @@ export function createPatchFunction(backend) {
 		}
 	}
 
-	function updateChildren(
-		parentElm,
-		oldCh,
-		newCh,
-		insertedVnodeQueue,
-		removeOnly
-	) {
+	//重排操作
+	function updateChildren(parentElm, oldCh, newCh, insertedVnodeQueue, removeOnly) {
+		//创建首尾4个游标，以及对应的节点
 		let oldStartIdx = 0;
 		let newStartIdx = 0;
 		let oldEndIdx = oldCh.length - 1;
@@ -475,122 +452,65 @@ export function createPatchFunction(backend) {
 			checkDuplicateKeys(newCh);
 		}
 
+		//开始循环 循环条件：开始游标超过结束游标，就结束
 		while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+			//前两个游标位置调整
 			if (isUndef(oldStartVnode)) {
 				oldStartVnode = oldCh[++oldStartIdx]; // Vnode has been moved left
 			} else if (isUndef(oldEndVnode)) {
 				oldEndVnode = oldCh[--oldEndIdx];
-			} else if (sameVnode(oldStartVnode, newStartVnode)) {
-				patchVnode(
-					oldStartVnode,
-					newStartVnode,
-					insertedVnodeQueue,
-					newCh,
-					newStartIdx
-				);
+			} else if (sameVnode(oldStartVnode, newStartVnode)) {// 首尾判断开始
+				patchVnode(oldStartVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
 				oldStartVnode = oldCh[++oldStartIdx];
 				newStartVnode = newCh[++newStartIdx];
 			} else if (sameVnode(oldEndVnode, newEndVnode)) {
-				patchVnode(
-					oldEndVnode,
-					newEndVnode,
-					insertedVnodeQueue,
-					newCh,
-					newEndIdx
-				);
+				patchVnode(oldEndVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx);
 				oldEndVnode = oldCh[--oldEndIdx];
 				newEndVnode = newCh[--newEndIdx];
-			} else if (sameVnode(oldStartVnode, newEndVnode)) {
-				// Vnode moved right
-				patchVnode(
-					oldStartVnode,
-					newEndVnode,
-					insertedVnodeQueue,
-					newCh,
-					newEndIdx
-				);
-				canMove &&
-					nodeOps.insertBefore(
-						parentElm,
-						oldStartVnode.elm,
-						nodeOps.nextSibling(oldEndVnode.elm)
-					);
+			} else if (sameVnode(oldStartVnode, newEndVnode)) {// Vnode moved right
+				patchVnode(oldStartVnode, newEndVnode, insertedVnodeQueue, newCh, newEndIdx);
+				canMove && nodeOps.insertBefore(parentElm, oldStartVnode.elm, nodeOps.nextSibling(oldEndVnode.elm));
 				oldStartVnode = oldCh[++oldStartIdx];
 				newEndVnode = newCh[--newEndIdx];
-			} else if (sameVnode(oldEndVnode, newStartVnode)) {
-				// Vnode moved left
-				patchVnode(
-					oldEndVnode,
-					newStartVnode,
-					insertedVnodeQueue,
-					newCh,
-					newStartIdx
-				);
-				canMove &&
-					nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm);
+			} else if (sameVnode(oldEndVnode, newStartVnode)) {// Vnode moved left
+				patchVnode(oldEndVnode, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
+				canMove && nodeOps.insertBefore(parentElm, oldEndVnode.elm, oldStartVnode.elm);
 				oldEndVnode = oldCh[--oldEndIdx];
 				newStartVnode = newCh[++newStartIdx];
 			} else {
+				//首位都没找到相同的，从新数组头一个，拿出来，从老的寻找相同的
 				if (isUndef(oldKeyToIdx))
 					oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx);
 				idxInOld = isDef(newStartVnode.key)
 					? oldKeyToIdx[newStartVnode.key]
 					: findIdxInOld(newStartVnode, oldCh, oldStartIdx, oldEndIdx);
-				if (isUndef(idxInOld)) {
-					// New element
-					createElm(
-						newStartVnode,
-						insertedVnodeQueue,
-						parentElm,
-						oldStartVnode.elm,
-						false,
-						newCh,
-						newStartIdx
-					);
+				if (isUndef(idxInOld)) { // New element
+					//没找到，创建，追加
+					createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
 				} else {
+					// 找到了，对两者打补丁
 					vnodeToMove = oldCh[idxInOld];
 					if (sameVnode(vnodeToMove, newStartVnode)) {
-						patchVnode(
-							vnodeToMove,
-							newStartVnode,
-							insertedVnodeQueue,
-							newCh,
-							newStartIdx
-						);
+						patchVnode(vnodeToMove, newStartVnode, insertedVnodeQueue, newCh, newStartIdx);
 						oldCh[idxInOld] = undefined;
-						canMove &&
-							nodeOps.insertBefore(
-								parentElm,
-								vnodeToMove.elm,
-								oldStartVnode.elm
-							);
+						//同时进行移动操作，放到oldStartVnode前面
+						canMove && nodeOps.insertBefore(parentElm, vnodeToMove.elm, oldStartVnode.elm);
 					} else {
 						// same key but different element. treat as new element
-						createElm(
-							newStartVnode,
-							insertedVnodeQueue,
-							parentElm,
-							oldStartVnode.elm,
-							false,
-							newCh,
-							newStartIdx
-						);
+						createElm(newStartVnode, insertedVnodeQueue, parentElm, oldStartVnode.elm, false, newCh, newStartIdx);
 					}
 				}
 				newStartVnode = newCh[++newStartIdx];
 			}
 		}
+
+		//收尾工作
 		if (oldStartIdx > oldEndIdx) {
+			//老的先结束，批量添加，创建
 			refElm = isUndef(newCh[newEndIdx + 1]) ? null : newCh[newEndIdx + 1].elm;
-			addVnodes(
-				parentElm,
-				refElm,
-				newCh,
-				newStartIdx,
-				newEndIdx,
-				insertedVnodeQueue
-			);
+			addVnodes(parentElm, refElm, newCh, newStartIdx, newEndIdx, insertedVnodeQueue);
 		} else if (newStartIdx > newEndIdx) {
+			//新的结束，批量删除
 			removeVnodes(oldCh, oldStartIdx, oldEndIdx);
 		}
 	}
@@ -620,6 +540,7 @@ export function createPatchFunction(backend) {
 		}
 	}
 
+	//diff 在这里发生
 	function patchVnode(
 		oldVnode,
 		vnode,
@@ -668,33 +589,39 @@ export function createPatchFunction(backend) {
 			i(oldVnode, vnode);
 		}
 
-		//获取新旧节点
+		//获取新旧孩子节点
 		const oldCh = oldVnode.children;
 		const ch = vnode.children;
-		//属性更新
+
+		//属性更新 vue3这里升级
 		if (isDef(data) && isPatchable(vnode)) {
 			for (i = 0; i < cbs.update.length; ++i) cbs.update[i](oldVnode, vnode);
 			if (isDef((i = data.hook)) && isDef((i = i.update))) i(oldVnode, vnode);
 		}
-		//新节点没有孩子
+		//新节点没有文本
 		if (isUndef(vnode.text)) {
-			//双方都没有孩子
+			//双方都有孩子
 			if (isDef(oldCh) && isDef(ch)) {
-				//重排
-				if (oldCh !== ch)
-					updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly);
+				//重排操作
+				if (oldCh !== ch) updateChildren(elm, oldCh, ch, insertedVnodeQueue, removeOnly);
 			} else if (isDef(ch)) {
+				//new有孩子。old的没孩子
 				if (process.env.NODE_ENV !== "production") {
 					checkDuplicateKeys(ch);
 				}
+				//如果老的有文本，清空
 				if (isDef(oldVnode.text)) nodeOps.setTextContent(elm, "");
+				//新增到老的
 				addVnodes(elm, null, ch, 0, ch.length - 1, insertedVnodeQueue);
 			} else if (isDef(oldCh)) {
+				//old有孩子，new没孩子 ， 删除
 				removeVnodes(oldCh, 0, oldCh.length - 1);
 			} else if (isDef(oldVnode.text)) {
+				//老节点有文本，新节点没有文本 ， 清空老的文本，甚少见
 				nodeOps.setTextContent(elm, "");
 			}
 		} else if (oldVnode.text !== vnode.text) {
+			//都没有孩子，都是文本，更新
 			nodeOps.setTextContent(elm, vnode.text);
 		}
 		if (isDef(data)) {
