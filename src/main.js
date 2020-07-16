@@ -22,15 +22,16 @@ Vue.mixin({
 
 // 需要每个请求返回一个Vue实例
 export function createApp(context) {
-  const router = createRouter()
-  const store = createStore()
+  const router = createRouter();  //导入一个router实例
+  const store = createStore();  //导入一个router实例
+
   const app = new Vue({
     router,
     store,
-    context, // 用于和外面renderer交互
+    context, // 传入的上下文,用于和外面renderer交互
     render: h => h(App)
-  })
+  });//无需要挂在,因为服务只需要，虚拟dom转为string
 
-  return {app,router,store}
+  return { app, router, store }
 }
 
