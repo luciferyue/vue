@@ -1,18 +1,18 @@
 import Vue from 'vue'
 import App from './App.vue'
 import vMessage from './utils/showToast';
-// import router from './my/router';
-// import store from "./my/store"
-import router from './router';
-import store from "./store"
+import router from './my/router';
+import store from "./my/store"
+// import router from './router';
+// import store from "./store";
+import axios from "axios";
 
 Vue.use(vMessage)
 
-Vue.config.productionTip = false
-
+Vue.config.productionTip = false;
+Vue.prototype.$http = axios;
 new Vue({
-  // 设置router
-  router,
-  store,
-  render: h => h(App),
+	router,
+	store,
+	render: h => h(App),
 }).$mount('#app')
