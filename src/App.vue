@@ -1,16 +1,21 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link>|
-      <router-link to="/about">About</router-link>
-    </div>
-    <!-- 路由出口 -->
-    <!-- url变化为什么内容能跟着变？ -->
-    <router-view />
+    <img alt="Vue logo" src="./assets/logo.png" />
+    <HelloWorld msg="Welcome to Your TypeScript App" />
   </div>
 </template>
 
-<script>
+<script lang="ts">
+import { Component, Vue } from "vue-property-decorator";
+import HelloWorld from "./components/HelloWorld.vue";
+// import HelloWorld from "./components/TsxComp.tsx";
+
+@Component({
+  components: {
+    HelloWorld
+  }
+})
+export default class App extends Vue {}
 </script>
 
 <style>
@@ -21,18 +26,5 @@
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
-}
-
-#nav {
-  padding: 30px;
-}
-
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-#nav a.router-link-exact-active {
-  color: #42b983;
 }
 </style>
