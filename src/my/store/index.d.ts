@@ -1,5 +1,5 @@
-import Vuex from "vuex"
+// import Vuex from "vuex"
 
-declare const store: Vuex
+// declare const store: Vuex
 
-export default store;
+// export default store;

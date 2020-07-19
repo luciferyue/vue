@@ -1,7 +1,13 @@
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your TypeScript App" />
+    <div id="nav">
+      <router-link to="/">Home</router-link>|
+      <router-link to="/about">About</router-link>
+    </div>
+    <!-- 路由出口 -->
+    <!-- url变化为什么内容能跟着变？ -->
+    <router-view />
   </div>
 </template>
 

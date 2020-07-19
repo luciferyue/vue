@@ -16,7 +16,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from "vue-property-decorator";
+import { Component, Prop, Vue, Emit } from "vue-property-decorator";
 interface Feature {
   id: number;
   name: string;
@@ -29,11 +29,15 @@ type FeatureSelect = Feature & Select;
 
 @Component
 export default class HelloWorld extends Vue {
-  @Prop() private msg!: string;
+  // 装饰器：加括号说明prop是一个装饰器工厂，返回的才是装饰器，参数一般是对象
+  // 以Prop为例，就是vue传递props选项
+  @Prop({ type: String, required: true })
+  private msg!: string; // 这行约束是给ts编译器的
 
   //属性将成为data中的数据
   features: FeatureSelect[] = [];
 
+  @Emit() // 默认事件名称是方法名，返回值是参数
   addFeature(e: KeyboardEvent) {
     const inpt = e.target as HTMLInputElement; //类型断言
     const len: number = this.features.length;
@@ -46,6 +50,12 @@ export default class HelloWorld extends Vue {
     this.features.push(data);
 
     inpt.value = "";
+
+    // 告诉父，添加了一个Features
+    // this.$emit("add-feature" );
+
+    //相当于 this.$emit("add-feature" data);
+    return data;
   }
 
   created() {
