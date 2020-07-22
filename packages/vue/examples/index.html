@@ -1,0 +1,56 @@
+<body>
+	<div id="app">
+		<h1>{{message}}</h1>
+		<button @click="minus">-</button>
+		<input type="text" v-model="num" @keyup="change" />
+		<button @click="add">+</button>
+		<div>单价：{{price}}</div>
+		<h2>总计金额：{{total}}</h2>
+		<div>距离订单结束：{{endTime}} 秒</div>
+		<button @click="submit">提交</button>
+	</div>
+
+	<script src="../dist/vue.global.js"></script>
+	<script>
+		const { createApp, reactive, computed, onMounted, toRefs } = Vue;
+		//订单参数
+		function order() {
+			const data = reactive({
+				message: 'see you next time',
+				num: 1,
+				price: 100,
+				total: computed(() => data.num * data.price)
+			})
+			function minus() { data.num--; }	//加
+			function add() { data.num++ }	//减
+			function change() { data.num = data.num.replace(/[^\d]/g, '') } //只能输入数字
+			return { ...toRefs(data), minus, add, change }//返回数据
+		}
+		//订购单倒计时
+		function countDown() {
+			const state = reactive({ endTime: 60 });
+			let timer;
+			onMounted(() => {
+				timer = setInterval(() => {
+					if (!state.endTime) {
+						state.endTime = 0; clearInterval(timer)
+					} else { state.endTime-- }
+				}, 1000)
+			})
+			return toRefs(state)
+		}
+		const app = createApp({
+			setup() {
+				const param = order();
+				const { endTime } = countDown();
+				function submit() {
+					if (endTime.value > 0) {
+						alert('提交成功');
+					} else { alert('订单超时'); }
+				}
+				return { ...param, endTime, submit }
+			}
+		}).mount('#app')
+	</script>
+	<style>
+	</style>
