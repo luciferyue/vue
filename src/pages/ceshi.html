@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<button id="add">添加</button>
+<ul id="app"></ul>
+
+<body>
+
+</body>
+<script>
+	function addArr() {
+		let arr = [];
+		for (let i = 0; i < 99999; i++) {
+			arr.push(i);
+		}
+		return arr;
+	}
+	function addArr2() {
+		let arr = [];
+		for (let i = 0; i < 100000; i++) {
+			arr.push(i * 2);
+		}
+		return arr;
+	}
+	window.onload = function () {
+		var app = document.getElementById('app');
+		var add = document.getElementById('add');
+		var data = addArr();
+		var str = ''
+		for (let i = 0; i < data.length; i++) {
+			str += "<li>" + data[i] + "</li>"
+		}
+		app.innerHTML = str;
+
+		add.onclick = function () {
+			console.time("计时器1");
+
+			var data2 = addArr2();
+			var str2 = ''
+			for (let i = 0; i < data2.length; i++) {
+				str2 += "<li>" + data2[i] + "</li>"
+			}
+			app.innerHTML = str2;
+			console.timeEnd("计时器1");
+		}
+	}
+</script>
+
+</html>
