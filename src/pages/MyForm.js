@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import createForm from '../compontents/my-rc-form';
-import Input from '../compontents/input';
+// import Input from '../compontents/input';
+import Input from "../compontents/Input";
 
 const nameRules = {
 	required: true, message: "请输入姓名",
