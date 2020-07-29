@@ -1,13 +1,25 @@
-// const initialState = 0;
+const initialState = 0;
 
-const reducerName = (state = 0, action) => {
+const reducerNum = (state = initialState, action) => {
 	switch (action.type) {
 		case "ADD":
 			return state + 1
 		case "MINUS":
-			return state - 2
+			return state - 1
 		default:
 			return state
 	}
 }
-export default reducerName;
+
+const reducerName = (state = "计算器", action) => {
+	switch (action.type) {
+		case "CHANGE":
+			return action.payload
+		default:
+			return state
+	}
+}
+export {
+	reducerNum,
+	reducerName
+};
