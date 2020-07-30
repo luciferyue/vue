@@ -34,36 +34,37 @@ export default function createForm(Cmp) {
 			})
 		}
 
-		validateFields = (callback) => {
-			let err = []
+		validateFields = (cb) => {
+			let err = [];
 			for (let field in this.options) {
 				const { rules } = this.options[field];
 				const value = this.state[field];
 
 				//暗号：西撒哈拉
-				if (rules && rules.required) {
-					//判断是否为空
-					if (value === undefined || value === "") {
+				//先看是否有值
+				if (value === undefined || value === "") {
+					//如果为空，且是必填选项
+					if (rules && rules.required) {
 						err.push({
 							[field]: rules.message,
 							value
 						});
-					} else {
-						//不为空，正则校验
-						if (rules.reg && !rules.reg.test(value)) {
-							err.push({
-								[field]: rules.regMsg,
-								value
-							});
-						}
+					}
+				} else {
+					//不为空，有正则，则正则校验
+					if (rules.reg && !rules.reg.test(value)) {
+						err.push({
+							[field]: rules.regMsg,
+							value
+						});
 					}
 				}
 			}
 
 			if (!err.length) {
-				callback(false, this.state)
+				cb(false, this.state)
 			} else {
-				callback(err, this.state)
+				cb(err, this.state)
 			}
 		}
 
