@@ -22,7 +22,10 @@ export default defineConfig({
           path: '/more',
           component: '@/pages/more/index',
         },
-
+        {
+          path: '/table',
+          component: '@/pages/table/index',
+        },
         {
           path: '/product/:id',
           component: '@/pages/product/_layout',

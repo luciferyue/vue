@@ -10,7 +10,6 @@ for (let i = 0; i < 10; i++) {
 
 let total = 101;
 function searchProductData({ name = '', ...pagination }) {
-  console.log('哈哈哈😁', name, pagination); //sy-log
   const res = [];
 
   let pageSize = pagination.pageSize || 10;
@@ -33,7 +32,6 @@ function searchProductData({ name = '', ...pagination }) {
 export default {
   'POST /api/getProductData': (req, res) => {
     //搜索
-    console.log('hahha', req.body); //sy-log
     res.send({
       status: 'ok',
       ...searchProductData(req.body),
