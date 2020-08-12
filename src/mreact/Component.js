@@ -1,5 +1,5 @@
-export default function Component(props) {
-  this.props = props;
+function Component(props) {
+	this.props = props
 }
-
-Component.prototype.isReactComponent = {};
+Component.prototype.isReactCompontent = {}
+export default Component

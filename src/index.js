@@ -28,15 +28,11 @@ const jsx = (
 	<div className="border">
 		<p>全栈</p>
 		<a href="https://www.kaikeba.com/">开课吧</a>
-		<ClassComponent name="class" color="red" />
+		<ClassComponent name="class" />
 		<FunctionComponent name="function" />
-		{[1, 2].map(item => (
-			<React.Fragment key={item}>{item}</React.Fragment>
-		))}
-		{/* <>
-      <h1>aaa</h1>
-      <h1>bbb</h1>
-    </> */}
+		{/* {[1, 2].map(item => (
+			<div key={item} > {item}</div>
+		))} */}
 	</div>
 );
 
