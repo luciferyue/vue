@@ -1,4 +1,5 @@
 module.exports.compose = middlewares => {
+    //暗号：排序
     return function () {
         return dispatch(0)
         function dispatch(index) {
