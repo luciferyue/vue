@@ -1,0 +1,55 @@
+{
+  "window.zoomLevel": 0,
+  "editor.fontSize": 14,
+  "files.associations": {
+    "*.css": "scss",
+    "*.js": "typescriptreact",
+    "*.json": "json",
+    ".eslintrc.js": "javascript"
+  },
+  "eslint.validate": ["javascript", "javascriptreact"],
+  "workbench.colorTheme": "One Dark Pro",
+  "git.ignoreMissingGitWarning": true,
+  "javascript.implicitProjectConfig.experimentalDecorators": true,
+  "[scss]": {
+    "editor.defaultFormatter": "mrmlnc.vscode-postcss-sorting"
+  },
+  "editor.wordWrap": "on",
+  "[json]": {
+    "editor.wordWrap": "on"
+    // "editor.defaultFormatter": "vscode.json-language-features",
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[typescriptreact]": {
+    "editor.tabSize": 2,
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  // "eslint.enable": false,
+  "cSpell.userWords": ["Prefetch", "nocheck"],
+  "editor.quickSuggestions": null,
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "editor.formatOnType": true,
+  "editor.formatOnSave": true,
+  "editor.wordWrapColumn": 150,
+  "editor.tabSize": 2,
+  "editor.tabCompletion": "on",
+  "[jsonc]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.suggest.insertMode": "replace"
+  },
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  }
+}
