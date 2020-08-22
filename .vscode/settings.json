@@ -1,0 +1,12 @@
+{
+  "eslint.codeAction.showDocumentation": {
+    "enable": false
+  },
+  "files.associations": {
+    "*.css": "scss",
+    "*.js": "typescriptreact",
+    "*.json": "json",
+    ".eslintrc.js": "javascript"
+  },
+  "eslint.validate": ["javascript", "javascriptreact"]
+}
