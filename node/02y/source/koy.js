@@ -4,12 +4,18 @@ const request = require('./request');
 const response = require('./response');
 
 class KOY {
+  constructor() {
+    this.middleware = []
+  }
   listen(...args) {
     //创建http server
-    const server = http.createServer((req, res) => {
+    const server = http.createServer(async (req, res) => {
       //创建上下文
       let ctx = this.createContext(req, res);
-      this.callback(ctx);
+
+      // this.callback(ctx);
+      const fn = this.compose(this.middleware);
+      await fn(ctx)
 
       //数据响应
       res.end(ctx.body);
@@ -19,8 +25,12 @@ class KOY {
     server.listen(...args);
   }
 
-  use(callback) {
-    this.callback = callback;
+  // use(callback) {
+  //   this.callback = callback;
+  // }
+
+  use(middleware) {
+    this.middleware.push(middleware);
   }
 
   /**
@@ -37,6 +47,27 @@ class KOY {
     ctx.res = ctx.response.res = res;
 
     return ctx;
+  }
+
+  /**
+   * 合成函数
+   * @param {} middleware 
+   */
+  compose(middleware) {
+    return function (ctx) {
+      return dispatch(0); //先执行第一层
+      function dispatch(i) {
+        let fn = middleware[i];
+        if (!fn) {
+          return Promise.resolve();
+        }
+        return Promise.resolve(
+          fn(ctx, function next() {
+            return dispatch(i + 1);
+          })
+        );
+      }
+    };
   }
 }
 
