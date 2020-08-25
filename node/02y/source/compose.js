@@ -36,13 +36,13 @@ function compose(middleware) {
 }
 async function fn1(next) {
   console.log("fn1");
-  await next();
+  await next(); //f2
   console.log("end fn1");
 }
 async function fn2(next) {
   console.log("fn2");
-  // await delay();
-  await next();
+  await delay();
+  await next(); //f3
   console.log("end fn2");
 }
 function fn3(next) {
