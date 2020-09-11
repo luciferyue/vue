@@ -1,4 +1,5 @@
 test("Hello world", () => {
-  const hello = require("../index");
-  console.log(hello);
+  const str = require("../index");
+  console.log(str);
+  expect(str).toBe("Hello world")
 });
