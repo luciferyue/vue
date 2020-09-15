@@ -6,9 +6,7 @@ module.exports = class TestNow {
     if (!fs.existsSync(testPath)) {
       fs.mkdirSync(testPath);
     }
-
     //遍历代码文件
-    console.log(sourcePath);
     let list = fs.readdirSync(sourcePath);
     list
       // 添加完整路径
@@ -21,8 +19,9 @@ module.exports = class TestNow {
   }
 
   genTestFile(fileName) {
-    console.log('fileName:', fileName);
+    // console.log('fileName:', fileName);
     const testFileName = this.getTestFileName(fileName);
+    console.log('testFileName', testFileName);
     //判断此文件是否存在
     if (fs.existsSync(testFileName)) {
       console.log('该测试代码已存在', testFileName);
@@ -48,19 +47,19 @@ module.exports = class TestNow {
    * @param {*} fileName 
    */
   getTestFileName(fileName) {
-    const dirName = path.dirname(fileName);
-    const baseName = path.basename(fileName)
-    const extname = path.extname(fileName)
+    const dirName = path.dirname(fileName); //返回path的目录。
+    const baseName = path.basename(fileName) // 方法会返回 path 的最后一部分
+    const extname = path.extname(fileName) //方法会返回 path 的扩展名
     const testName = baseName.replace(extname, `.spec${extname}`);
+    // 方法用于从给定的路径对象返回路径字符串
     return path.format({
-      root: dirName + '/__test__/',
-      base: testName
+      root: dirName + '/__test__/', //它指定路径对象的根。
+      base: testName //它指定路径对象的基础。
     })
   }
 
   getTestSource(methodName, classFile, isClass = false) {
-    console.log('getTestSource', methodName, classFile);
-
+    // console.log('getTestSource', methodName, classFile);
     return `
 test('${'TEST ' + methodName}',()=>{
   const ${isClass ? '{' + methodName + '}' : methodName} = require('${'../' + classFile}')
