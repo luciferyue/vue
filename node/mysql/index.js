@@ -36,13 +36,13 @@ function querySql(sql, value) {
 // })
 
 //插入
-querySql('select * from t_user').then((data) => {
-  const newId = data.pop().id + 1;
-  querySql('INSERT INTO t_user SET  ?', { id: newId, name: 'node add' }).then((data) => {
-    console.log('插入数据成功', data);
-    conn.end();
-  })
-})
+// querySql('select * from t_user').then((data) => {
+//   const newId = data.pop().id + 1;
+//   querySql('INSERT INTO t_user SET  ?', { id: newId, name: 'node add' }).then((data) => {
+//     console.log('插入数据成功', data);
+//     conn.end();
+//   })
+// })
 
 //更新某个值
 // querySql('UPDATE t_user SET name=? where id=2', ['node change']).then((data) => {
