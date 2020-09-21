@@ -4,18 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "i:react15": "cd react15 && npm i",
-    "i:react16": "cd react16 && npm i",
-    "i:purehtml": "cd purehtml && npm i",
-    "i:vue": "cd vue && npm i",
+    "i:home": "cd app-home && npm i",
     "i:main": "cd main && npm i",
-    "i:all": "npm-run-all -p i:react15 i:react16 i:main i:purehtml i:vue",
-    "start:react15": "cd react15 && npm run start",
-    "start:react16": "cd react16 && npm run start",
-    "start:purehtml": "cd purehtml && npm run start",
-    "start:vue": "cd vue && npm run start",
+    "i:all": "npm-run-all -p i:home i:main",
+    "start:home": "cd app-home && npm run start",
     "start:main": "cd main && npm run start",
-    "start:all": "npm-run-all -p start:react16 start:react15 start:main start:purehtml start:vue"
+    "start:all": "npm-run-all -p start:home start:main"
   },
   "author": "",
   "license": "ISC",

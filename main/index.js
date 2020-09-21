@@ -7,8 +7,6 @@ import {
 } from "qiankun";
 import "./index.less";
 
-import "zone.js";
-
 /**
  * 主应用 **可以使用任意技术栈**
  * 以下分别是 React 和 Vue 的示例，可切换尝试
@@ -30,32 +28,11 @@ const loader = (loading) => render({ loading });
 registerMicroApps(
   [
     {
-      name: "react16",
+      name: "app-home",
       entry: "//localhost:7100",
       container: "#subapp-viewport",
       loader,
-      activeRule: "/react16",
-    },
-    {
-      name: "react15",
-      entry: "//localhost:7102",
-      container: "#subapp-viewport",
-      loader,
-      activeRule: "/react15",
-    },
-    {
-      name: "vue",
-      entry: "//localhost:7101",
-      container: "#subapp-viewport",
-      loader,
-      activeRule: "/vue",
-    },
-    {
-      name: "purehtml",
-      entry: "//localhost:7104",
-      container: "#subapp-viewport",
-      loader,
-      activeRule: "/purehtml",
+      activeRule: "/home",
     },
   ],
   {
@@ -99,7 +76,7 @@ setGlobalState({
 /**
  * Step3 设置默认进入的子应用
  */
-setDefaultMountApp("/react16");
+setDefaultMountApp("/home");
 
 /**
  * Step4 启动应用

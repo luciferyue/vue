@@ -12,8 +12,10 @@ import Home from "./pages/Home";
 const About = lazy(() => import("./pages/About"));
 
 const RouteExample = () => {
+  console.log(`------------------------${window.__POWERED_BY_QIANKUN__}`);
+
   return (
-    <Router basename={window.__POWERED_BY_QIANKUN__ ? "/react16" : "/"}>
+    <Router basename={window.__POWERED_BY_QIANKUN__ ? "/home" : "/"}>
       <nav>
         <Link to="/">Home</Link>
         <Divider type="vertical" />
