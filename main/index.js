@@ -34,6 +34,13 @@ registerMicroApps(
       loader,
       activeRule: "/home",
     },
+    {
+      name: "wams",
+      entry: "//localhost:3001",
+      container: "#subapp-viewport",
+      loader,
+      activeRule: "/wams",
+    },
   ],
   {
     beforeLoad: [
@@ -76,7 +83,7 @@ setGlobalState({
 /**
  * Step3 设置默认进入的子应用
  */
-setDefaultMountApp("/home");
+setDefaultMountApp("/wams");
 
 /**
  * Step4 启动应用
