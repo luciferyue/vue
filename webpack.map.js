@@ -1,11 +1,11 @@
 const path = require("path");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
-const htmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const { setMap } = require("./setMap");
+const { entry, htmlWebpackPlugins } = setMap();
 
 module.exports = {
-  entry: "./src/index.js",
-  // entry: { index: "./src/index.js", login: "./src/login.js" },
+  entry,
   output: {
     path: path.resolve(__dirname, "./dist"),
     filename: "[name]-[chunkhash:7].js",
@@ -53,29 +53,9 @@ module.exports = {
       },
     ],
   },
-  devServer: {
-    contentBase: "./dist",
-    open: true,
-    port: 8081,
-    proxy: {
-      "/api": {
-        target: "http://localhost:8079/",
-      },
-    },
-  },
-  //source-map 映射 , inline-source-map打在一起，比较大
-  devtool: "source-map",
+  // devtool: "source-map",
   plugins: [
-    new htmlWebpackPlugin({
-      template: "./src/index.html",
-      filename: "index.html",
-      chunks: ["main"],
-    }),
-    // new htmlWebpackPlugin({
-    //   template: "./src/index.html",
-    //   filename: "login.html",
-    //   chunks: ["login"],
-    // }),
+    ...htmlWebpackPlugins,
     new CleanWebpackPlugin(),
     new miniCssExtractPlugin({
       filename: "css/index-[contenthash:7].css",

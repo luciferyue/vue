@@ -33,6 +33,17 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(png|jpe?g|gif)$/,
+        use: {
+          loader: "url-loader",
+          options: {
+            name: "[hash:6][name].[ext]",
+            outputPath: "img",
+            limit: 2048, //官网推荐
+          },
+        },
+      },
     ],
   },
   resolveLoader: {
