@@ -2,6 +2,7 @@ const path = require("path");
 const miniCssExtractPlugin = require("mini-css-extract-plugin");
 const htmlWebpackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
+const fileWebpackPlugin = require("./my-plugins/file-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
@@ -47,25 +48,26 @@ module.exports = {
           },
         },
       },
-      {
-        test: /\.woff2$/,
-        use: "file-loader",
-      },
+      // {
+      //   test: /\.woff2$/,
+      //   use: "file-loader",
+      // },
     ],
   },
-  devServer: {
-    contentBase: "./dist",
-    open: true,
-    port: 8081,
-    proxy: {
-      "/api": {
-        target: "http://localhost:8079/",
-      },
-    },
-  },
+  // devServer: {
+  //   contentBase: "./dist",
+  //   open: true,
+  //   port: 8081,
+  //   proxy: {
+  //     "/api": {
+  //       target: "http://localhost:8079/",
+  //     },
+  //   },
+  // },
   //source-map 映射 , inline-source-map打在一起，比较大
   devtool: "source-map",
   plugins: [
+    new fileWebpackPlugin(),
     new htmlWebpackPlugin({
       template: "./src/index.html",
       filename: "index.html",
