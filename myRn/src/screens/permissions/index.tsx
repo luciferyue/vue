@@ -1,5 +1,6 @@
 import React from "react";
 import { Text, View, StyleSheet, PermissionsAndroid, Platform, Button, Alert } from 'react-native';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 const Permissions = () => {
   const [permissionsGranted, setPermissionsGranted] = React.useState(false);
@@ -8,9 +9,10 @@ const Permissions = () => {
       PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION,
       PermissionsAndroid.PERMISSIONS.CAMERA,
     ];
+    //安卓下授权
     if (Platform.OS === 'android') {
       PermissionsAndroid.requestMultiple(PERMISSIONS).then((results) => {
-        Alert.alert(JSON.stringify(results));
+        // Alert.alert(JSON.stringify(results));
         const allPermissionsGranted = Object.values(results).every(
           (result) => result === 'granted'
         );
@@ -24,6 +26,7 @@ const Permissions = () => {
   }
   return (
     <View style={styles.container}>
+      <Text style={styles.code}>暗号：一次学习，随处编写</Text>
       <Text style={styles.paragraph}>
         {permissionsGranted ? '已授权' : '未授权'}
       </Text>
@@ -39,11 +42,18 @@ const styles = StyleSheet.create({
     padding: 8,
   },
   paragraph: {
-    margin: 24,
+    margin: 16,
     fontSize: 18,
     fontWeight: 'bold',
     textAlign: 'center',
   },
+  code: {
+    margin: 20,
+    fontSize: 24,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    color: 'red'
+  }
 });
 
 export default Permissions;
