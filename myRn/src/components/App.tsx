@@ -6,6 +6,7 @@ import DetailScreen from "screens/detail";
 import HomeScreen from "screens/home";
 import Permissions from "screens/permissions";
 import Edit from "screens/edit";
+import Gird from "screens/layout";
 
 
 const Stack = createStackNavigator();
@@ -19,6 +20,7 @@ function App() {
         <Stack.Screen name="Detail" component={DetailScreen} />
         <Stack.Screen name="Permissions" component={Permissions} />
         <Stack.Screen name="Edit" component={Edit} />
+        <Stack.Screen name="Gird" component={Gird} />
       </Stack.Navigator>
     </NavigationContainer>
   );
