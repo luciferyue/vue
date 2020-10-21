@@ -20,6 +20,7 @@ const Home = (props) => {
           <Link url="Detail" title="详情跳转" />
           <Link url="Edit" title="编辑姓名" param={{ userName, setUserName }} />
           <Link url="Gird" title="九宫格" />
+          <Link url="Movie" title="电影选票" />
         </View>
       </View>
     </ScrollView>
