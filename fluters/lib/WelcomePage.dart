@@ -11,7 +11,7 @@ class WelcomePage extends StatefulWidget {
 }
 
 class _WelcomePageState extends State<WelcomePage> {
-  int counter = 2;
+  int counter = 1;
 
   Timer _timer;
 

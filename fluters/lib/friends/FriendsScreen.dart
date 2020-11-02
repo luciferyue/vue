@@ -1,3 +1,4 @@
+import 'package:fluters/friends/InheritedWidgetDemo.dart';
 import 'package:flutter/material.dart';
 
 class FriendsScreen extends StatelessWidget {
@@ -8,48 +9,15 @@ class FriendsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('好友列表-listview')),
-      body: getListView2(),
-    );
-  }
-
-  getListView1() {
-    return ListView.builder(
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          var content = items[index];
-          return InkWell(
-            child: Padding(
-              padding: EdgeInsets.all(10),
-              child: Text(content),
-            ),
-            onTap: () {
-              print("object");
+        appBar: AppBar(title: Text('好友动态')),
+        body: Center(
+          child: RaisedButton(
+            child: Text('跳转provider'),
+            onPressed: () {
+              Navigator.of(context).push(new MaterialPageRoute(
+                  builder: (context) => InheritedWidgetDemo()));
             },
-          );
-        });
-  }
-
-  getListView2() {
-    return ListView.separated(
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        var content = items[index];
-        return InkWell(
-          child: Padding(
-            padding: EdgeInsets.all(10),
-            child: Text(content),
           ),
-          onTap: () {
-            print("object");
-          },
-        );
-      },
-      separatorBuilder: (context, index) {
-        return Divider(
-          color: Colors.red,
-        );
-      },
-    );
+        ));
   }
 }

@@ -5,11 +5,16 @@ import 'package:fluters/homeScreen.dart';
 import 'package:fluters/my/myThirdScreen.dart';
 import 'package:fluters/my/sceondScreen.dart';
 import 'package:fluters/my/myThirdScreen.dart';
+import 'package:fluters/provider/company_list.dart';
 import 'package:fluters/singleChild/SingleChildScrollView.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(MultiProvider(
+    providers: [ChangeNotifierProvider(create: (_) => ManageListProvider())],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

@@ -1,3 +1,4 @@
+import 'package:fluters/my/BrowserScreen.dart';
 import 'package:fluters/my/navigation_tast.dart';
 import 'package:flutter/material.dart';
 
@@ -8,18 +9,26 @@ class MyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('我的')),
-      body: new Center(
-        child: Center(
-          child: RaisedButton(
-            onPressed: () {
-              Navigator.push(
-                  context,
-                  new MaterialPageRoute(
-                      builder: (context) => new NavigationTast()));
-            },
-          ),
+      body: new Column(children: [
+        RaisedButton(
+          child: Text("跳转"),
+          onPressed: () {
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => new NavigationTast()));
+          },
         ),
-      ),
+        RaisedButton(
+          child: Text("跳转webView"),
+          onPressed: () {
+            Navigator.push(
+                context,
+                new MaterialPageRoute(
+                    builder: (context) => new BrowserScreen()));
+          },
+        ),
+      ]),
     );
   }
 }
